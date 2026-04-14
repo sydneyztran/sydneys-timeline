@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sydney's Timeline</title>
+    <style>
+        * {
+        box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f7f4ff;
+      color: #2d1f45;
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(135deg, #8f6bff, #c7b5ff);
+      color: white;
+      text-align: center;
+      padding: 4rem 1rem 3rem;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+
+    header p {
+      margin-top: 0.75rem;
+      font-size: 1.1rem;
+      opacity: 0.95;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 4rem;
+    }
+
+    .timeline {
+      position: relative;
+      margin-top: 2rem;
+      padding-left: 2rem;
+      border-left: 4px solid #b49aff;
+    }
+
+    .event {
+      position: relative;
+      background: white;
+      border-radius: 16px;
+      padding: 1.2rem 1.2rem 1rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 8px 24px rgba(63, 33, 104, 0.08);
+    }
+
+    .event::before {
+      content: "";
+      position: absolute;
+      left: -2.7rem;
+      top: 1.2rem;
+      width: 16px;
+      height: 16px;
+      background: #8f6bff;
+      border: 4px solid #f7f4ff;
+      border-radius: 50%;
+    }
+
+    .date {
+      display: inline-block;
+      background: #efe9ff;
+      color: #6a45d1;
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .event h2 {
+      margin: 0 0 0.5rem;
+      font-size: 1.3rem;
+    }
+
+    .event p {
+      margin: 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2rem 1rem 3rem;
+      color: #6d5a91;
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 600px) {
+      header h1 {
+        font-size: 2rem;
+      }
+
+      .timeline {
+        padding-left: 1.5rem;
+      }
+
+      .event::before {
+        left: -2.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Sydney's Timeline</h1>
+    <p>A simple timeline website built with HTML and CSS</p>
+  </header>
+
+  <main class="container">
+    <section class="timeline">
+      <article class="event">
+        <div class="date">2022</div>
+        <h2>Started College Journey</h2>
+        <p>Add a short description here about what happened during this part of your timeline.</p>
+      </article>
+
+      <article class="event">
+        <div class="date">2023</div>
+        <h2>Reached a Big Milestone</h2>
+        <p>Write about an achievement, project, internship, or important memory.</p>
+      </article>
+
+      <article class="event">
+        <div class="date">2024</div>
+        <h2>Built Something New</h2>
+        <p>This section can highlight a class project, leadership role, or personal goal.</p>
+      </article>
+
+      <article class="event">
+        <div class="date">2025</div>
+        <h2>Looking Ahead</h2>
+        <p>Add what you are working toward next and what this timeline means to you.</p>
+      </article>
+    </section>
+  </main>
+
+  <footer>
+    Made by Sydney
+  </footer>
+</body>
+</html>
