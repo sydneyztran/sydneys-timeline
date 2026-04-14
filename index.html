@@ -1,153 +1,573 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sydney's Timeline</title>
-    <style>
-        * {
-        box-sizing: border-box;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sydney's Timeline | History of Mathematics</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Quicksand:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fdf7f2;
+      --paper: rgba(255, 252, 248, 0.92);
+      --text: #433126;
+      --muted: #7b6557;
+      --line: #c9a98c;
+      --accent: #b86f50;
+      --accent-soft: #ead1c1;
+      --card: rgba(255,255,255,0.82);
+      --shadow: 0 14px 35px rgba(88, 55, 34, 0.12);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
     }
 
     body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f7f4ff;
-      color: #2d1f45;
-      line-height: 1.6;
+      font-family: 'Quicksand', sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, #fff4ea 0%, transparent 24%),
+        radial-gradient(circle at top right, #f6e3d6 0%, transparent 20%),
+        linear-gradient(180deg, #fbf4ee 0%, #f7efe7 100%);
+      line-height: 1.7;
+    }
+
+    .page {
+      width: min(1100px, calc(100% - 2rem));
+      margin: 0 auto;
     }
 
     header {
-      background: linear-gradient(135deg, #8f6bff, #c7b5ff);
-      color: white;
+      padding: 4.5rem 0 2.25rem;
       text-align: center;
-      padding: 4rem 1rem 3rem;
     }
 
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
+    .eyebrow {
+      display: inline-block;
+      padding: 0.35rem 0.9rem;
+      background: var(--accent-soft);
+      color: #8a5437;
+      border-radius: 999px;
+      font-size: 0.88rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      font-weight: 600;
     }
 
-    header p {
-      margin-top: 0.75rem;
-      font-size: 1.1rem;
-      opacity: 0.95;
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 6vw, 5.4rem);
+      line-height: 0.95;
+      margin-bottom: 0.9rem;
+      color: #5e3d2e;
     }
 
-    .container {
-      max-width: 900px;
+    .subtitle {
+      max-width: 760px;
       margin: 0 auto;
-      padding: 2rem 1.25rem 4rem;
+      font-size: 1.08rem;
+      color: var(--muted);
     }
 
-    .timeline {
-      position: relative;
+    .hero-card {
       margin-top: 2rem;
-      padding-left: 2rem;
-      border-left: 4px solid #b49aff;
+      background: var(--paper);
+      border: 1px solid rgba(185, 134, 102, 0.18);
+      box-shadow: var(--shadow);
+      border-radius: 28px;
+      padding: 1.25rem;
+      backdrop-filter: blur(6px);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+      text-align: left;
+    }
+
+    .mini-stat {
+      background: rgba(255,255,255,0.75);
+      border-radius: 20px;
+      padding: 1rem;
+      border: 1px solid rgba(185, 134, 102, 0.14);
+    }
+
+    .mini-stat strong {
+      display: block;
+      font-size: 1.3rem;
+      color: #8f5639;
+      margin-bottom: 0.25rem;
+    }
+
+    .section {
+      padding: 1.2rem 0 2rem;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.1rem, 3vw, 3rem);
+      margin-bottom: 0.35rem;
+      color: #5d3a2b;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      margin-bottom: 1.6rem;
+      max-width: 760px;
+    }
+
+    .era {
+      position: relative;
+      padding-left: 2.25rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .era::before {
+      content: "";
+      position: absolute;
+      left: 0.75rem;
+      top: 0.6rem;
+      bottom: -1.1rem;
+      width: 3px;
+      background: linear-gradient(180deg, #c08d6f 0%, #e7cdbd 100%);
+      border-radius: 999px;
+    }
+
+    .era-header {
+      position: relative;
+      margin-bottom: 1rem;
+      padding-left: 0.35rem;
+    }
+
+    .era-header::before {
+      content: "";
+      position: absolute;
+      left: -1.82rem;
+      top: 0.55rem;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: #b86f50;
+      border: 4px solid #f7efe7;
+      box-shadow: 0 0 0 3px rgba(184,111,80,0.12);
+    }
+
+    .era h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem;
+      color: #7a4933;
+      margin-bottom: 0.2rem;
+    }
+
+    .era-note {
+      font-size: 0.98rem;
+      color: var(--muted);
+    }
+
+    .events {
+      display: grid;
+      gap: 1rem;
     }
 
     .event {
       position: relative;
-      background: white;
-      border-radius: 16px;
-      padding: 1.2rem 1.2rem 1rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 8px 24px rgba(63, 33, 104, 0.08);
+      background: var(--card);
+      border: 1px solid rgba(185, 134, 102, 0.14);
+      border-radius: 22px;
+      padding: 1.15rem 1.2rem;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
 
-    .event::before {
-      content: "";
-      position: absolute;
-      left: -2.7rem;
-      top: 1.2rem;
-      width: 16px;
-      height: 16px;
-      background: #8f6bff;
-      border: 4px solid #f7f4ff;
-      border-radius: 50%;
+    .event:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 42px rgba(88, 55, 34, 0.16);
     }
 
     .date {
       display: inline-block;
-      background: #efe9ff;
-      color: #6a45d1;
-      padding: 0.35rem 0.7rem;
+      padding: 0.32rem 0.75rem;
       border-radius: 999px;
-      font-weight: bold;
-      font-size: 0.9rem;
-      margin-bottom: 0.75rem;
+      background: #f2dfd2;
+      color: #8e563a;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
     }
 
-    .event h2 {
-      margin: 0 0 0.5rem;
-      font-size: 1.3rem;
+    .event h4 {
+      font-size: 1.15rem;
+      margin-bottom: 0.4rem;
+      color: #4c3427;
     }
 
     .event p {
-      margin: 0;
+      color: #654f43;
+      font-size: 0.98rem;
+    }
+
+    .world-event {
+      margin-top: 1rem;
+      background: linear-gradient(135deg, #b86f50, #9d5d42);
+      color: white;
+      border-radius: 22px;
+      padding: 1rem 1.15rem;
+      box-shadow: 0 14px 30px rgba(119, 67, 44, 0.24);
+    }
+
+    .world-event .label {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.85;
+      margin-bottom: 0.35rem;
+      font-weight: 700;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      backdrop-filter: blur(12px);
+      background: rgba(253, 247, 242, 0.72);
+      border-top: 1px solid rgba(185,134,102,0.12);
+      border-bottom: 1px solid rgba(185,134,102,0.12);
+      margin-bottom: 1rem;
+    }
+
+    .nav-inner {
+      width: min(1100px, calc(100% - 2rem));
+      margin: 0 auto;
+      display: flex;
+      gap: 0.7rem;
+      overflow-x: auto;
+      padding: 0.8rem 0;
+      scrollbar-width: none;
+    }
+
+    .nav-inner::-webkit-scrollbar {
+      display: none;
+    }
+
+    nav a {
+      white-space: nowrap;
+      text-decoration: none;
+      color: #7a5a4a;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid rgba(185,134,102,0.12);
+      padding: 0.55rem 0.95rem;
+      border-radius: 999px;
+      font-size: 0.92rem;
+      transition: 0.2s ease;
+    }
+
+    nav a:hover {
+      background: #f1dfd2;
+      color: #74462f;
     }
 
     footer {
       text-align: center;
-      padding: 2rem 1rem 3rem;
-      color: #6d5a91;
+      padding: 2rem 0 4rem;
+      color: #846a5b;
       font-size: 0.95rem;
     }
 
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 2rem;
+    @media (max-width: 860px) {
+      .hero-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        width: min(100% - 1rem, 1000px);
       }
 
-      .timeline {
-        padding-left: 1.5rem;
+      header {
+        padding-top: 3.5rem;
       }
 
-      .event::before {
-        left: -2.2rem;
+      .hero-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .era {
+        padding-left: 1.7rem;
+      }
+
+      .era::before {
+        left: 0.45rem;
+      }
+
+      .era-header::before {
+        left: -1.5rem;
       }
     }
   </style>
 </head>
 <body>
-  <header>
+  <header class="page">
+    <div class="eyebrow">History of Mathematics Project</div>
     <h1>Sydney's Timeline</h1>
-    <p>A simple timeline website built with HTML and CSS</p>
+    <p class="subtitle">A visual journey through the development of mathematics, from Ancient Egypt and Babylon to the twentieth century. This timeline highlights major mathematicians, important mathematical ideas, and a few historical events that shaped the world around them.</p>
+
+    <div class="hero-card">
+      <div class="hero-grid">
+        <div class="mini-stat">
+          <strong>12 Eras</strong>
+          <span>From ancient systems to modern logic and computing.</span>
+        </div>
+        <div class="mini-stat">
+          <strong>40+ Figures</strong>
+          <span>Key thinkers who changed the direction of mathematics.</span>
+        </div>
+        <div class="mini-stat">
+          <strong>Global Scope</strong>
+          <span>Egypt, Babylon, Greece, India, the Islamic world, Europe, and beyond.</span>
+        </div>
+        <div class="mini-stat">
+          <strong>Math + History</strong>
+          <span>Each era includes larger world events that shaped intellectual life.</span>
+        </div>
+      </div>
+    </div>
   </header>
 
-  <main class="container">
-    <section class="timeline">
-      <article class="event">
-        <div class="date">2022</div>
-        <h2>Started College Journey</h2>
-        <p>Add a short description here about what happened during this part of your timeline.</p>
-      </article>
+  <nav>
+    <div class="nav-inner">
+      <a href="#ancient">Ancient Egypt & Babylon</a>
+      <a href="#greek">Greek</a>
+      <a href="#late-greek">Late Greek/Hellenistic</a>
+      <a href="#india">Indian</a>
+      <a href="#islamic">Islamic</a>
+      <a href="#medieval">Medieval Europe</a>
+      <a href="#renaissance">Renaissance</a>
+      <a href="#early-modern">Early Modern</a>
+      <a href="#calculus">Calculus Era</a>
+      <a href="#eighteenth">18th Century</a>
+      <a href="#nineteenth">19th Century</a>
+      <a href="#twentieth">20th Century</a>
+    </div>
+  </nav>
 
-      <article class="event">
-        <div class="date">2023</div>
-        <h2>Reached a Big Milestone</h2>
-        <p>Write about an achievement, project, internship, or important memory.</p>
-      </article>
+  <main class="page section">
+    <h2 class="section-title">Timeline of Mathematical Development</h2>
+    <p class="section-intro">This site organizes your project by era, keeping the same flow as your PDF timeline while turning it into a scrollable website. Each section has the main mathematical developments plus a related world event.</p>
 
-      <article class="event">
-        <div class="date">2024</div>
-        <h2>Built Something New</h2>
-        <p>This section can highlight a class project, leadership role, or personal goal.</p>
-      </article>
+    <section class="era" id="ancient">
+      <div class="era-header">
+        <h3>Ancient Egypt & Babylon</h3>
+        <p class="era-note">Early mathematics focused on numeration, geometry, fractions, and equation-solving for practical problems.</p>
+      </div>
+      <div class="events">
+        <article class="event"><div class="date">c. 2000–1600 BCE</div><h4>Babylonian Base-60 System</h4><p>Babylonians used a sexagesimal place-value system, which influenced timekeeping, angles, and later mathematical notation.</p></article>
+        <article class="event"><div class="date">c. 1800 BCE</div><h4>Plimpton 322 Tablet</h4><p>A Babylonian clay tablet listing numerical triples related to right triangles, often compared to ideas later associated with the Pythagorean theorem.</p></article>
+        <article class="event"><div class="date">c. 1800–1600 BCE</div><h4>Babylonian Quadratic Equations</h4><p>Babylonians solved quadratic problems using geometric procedures and numerical methods that resemble early algebra.</p></article>
+        <article class="event"><div class="date">c. 1650 BCE</div><h4>Rhind Mathematical Papyrus</h4><p>An Egyptian document containing arithmetic, fractions, area formulas, and practical geometry problems.</p></article>
+        <article class="event"><div class="date">c. 570–495 BCE</div><h4>Egyptian Unit Fraction System</h4><p>Egyptian fractions expressed values as sums of distinct unit fractions, shaping their calculation methods.</p></article>
+      </div>
+    </section>
 
-      <article class="event">
-        <div class="date">2025</div>
-        <h2>Looking Ahead</h2>
-        <p>Add what you are working toward next and what this timeline means to you.</p>
-      </article>
+    <section class="era" id="greek">
+      <div class="era-header">
+        <h3>Greek Mathematics</h3>
+        <p class="era-note">Greek thinkers emphasized proof, abstraction, and logical structure, changing mathematics permanently.</p>
+      </div>
+      <div class="events">
+        <article class="event"><div class="date">c. 624–546 BCE</div><h4>Thales</h4><p>Introduced deductive reasoning into mathematics and is often credited with early geometric theorems.</p></article>
+        <article class="event"><div class="date">c. 570–495 BCE</div><h4>Pythagoras</h4><p>Associated with the theorem on right triangles and with the idea that number underlies harmony and structure.</p></article>
+        <article class="event"><div class="date">c. 490–430 BCE</div><h4>Zeno of Elea</h4><p>Known for paradoxes that challenged ideas of motion, infinity, and divisibility.</p></article>
+        <article class="event"><div class="date">c. 470–410 BCE</div><h4>Hippocrates of Chios</h4><p>Worked on geometry and helped organize early mathematical propositions.</p></article>
+        <article class="event"><div class="date">c. 408–355 BCE</div><h4>Eudoxus of Cnidus</h4><p>Developed the method of exhaustion, a key precursor to integral reasoning.</p></article>
+        <article class="event"><div class="date">c. 300 BCE</div><h4>Euclid</h4><p>Wrote <em>Elements</em>, one of the most influential mathematical texts ever created.</p></article>
+        <article class="event"><div class="date">c. 287–212 BCE</div><h4>Archimedes</h4><p>Studied area, volume, levers, and approximation methods, making major advances in geometry and physics.</p></article>
+      </div>
+      <div class="world-event">
+        <div class="label">World Event</div>
+        <p><strong>323 BCE — Death of Alexander the Great.</strong> After his death, the Hellenistic world spread Greek culture and learning across many regions.</p>
+      </div>
+    </section>
+
+    <section class="era" id="late-greek">
+      <div class="era-header">
+        <h3>Late Greek / Hellenistic Mathematics</h3>
+        <p class="era-note">This period connected geometry, astronomy, and early symbolic methods.</p>
+      </div>
+      <div class="events">
+        <article class="event"><div class="date">c. 190–120 BCE</div><h4>Hipparchus</h4><p>Often called a founder of trigonometry for linking astronomy and geometric measurement.</p></article>
+        <article class="event"><div class="date">c. 100–170 CE</div><h4>Claudius Ptolemy</h4><p>Advanced astronomical calculation and used trigonometric ideas in planetary models.</p></article>
+        <article class="event"><div class="date">c. 200–284 CE</div><h4>Diophantus</h4><p>Known for work in number theory and algebraic problems, especially equations with unknowns.</p></article>
+        <article class="event"><div class="date">c. 290–350 CE</div><h4>Pappus of Alexandria</h4><p>Collected and preserved major results of Greek geometry and mathematical commentary.</p></article>
+      </div>
+      <div class="world-event">
+        <div class="label">World Event</div>
+        <p><strong>476 CE — Fall of the Western Roman Empire.</strong> This is often used to mark the transition from the ancient world into the Middle Ages in Europe.</p>
+      </div>
+    </section>
+
+    <section class="era" id="india">
+      <div class="era-header">
+        <h3>Indian Mathematics</h3>
+        <p class="era-note">Indian mathematicians advanced place value, zero, arithmetic, algebra, and trigonometry.</p>
+      </div>
+      <div class="events">
+        <article class="event"><div class="date">499 CE</div><h4>Aryabhata</h4><p>Used place-value thinking and made important advances in arithmetic and astronomy.</p></article>
+        <article class="event"><div class="date">628 CE</div><h4>Brahmagupta</h4><p>Developed rules for zero and negative numbers and wrote on algebraic operations.</p></article>
+        <article class="event"><div class="date">c. 1114–1185 CE</div><h4>Bhaskara II</h4><p>Expanded work in algebra, arithmetic, and astronomy and discussed sophisticated mathematical ideas.</p></article>
+      </div>
+      <div class="world-event">
+        <div class="label">World Event</div>
+        <p><strong>c. 700 CE — Rise of the Islamic Caliphates.</strong> Expanding Islamic centers of learning helped preserve and transmit Greek and Indian mathematical knowledge.</p>
+      </div>
+    </section>
+
+    <section class="era" id="islamic">
+      <div class="era-header">
+        <h3>Islamic Mathematics</h3>
+        <p class="era-note">Scholars translated earlier works, developed algebra, and expanded astronomy, optics, and geometry.</p>
+      </div>
+      <div class="events">
+        <article class="event"><div class="date">c. 780–850 CE</div><h4>Al-Khwarizmi</h4><p>Wrote foundational algebraic works and helped spread the Hindu-Arabic numeral system.</p></article>
+        <article class="event"><div class="date">c. 965–1040 CE</div><h4>Ibn al-Haytham</h4><p>Made major contributions to geometry, optics, and mathematical reasoning.</p></article>
+        <article class="event"><div class="date">c. 1048–1131 CE</div><h4>Omar Khayyam</h4><p>Classified cubic equations and solved some geometrically, contributing to algebraic development.</p></article>
+      </div>
+      <div class="world-event">
+        <div class="label">World Event</div>
+        <p><strong>1096–1099 — First Crusade.</strong> Contact between European and Islamic societies increased through conflict and exchange.</p>
+      </div>
+    </section>
+
+    <section class="era" id="medieval">
+      <div class="era-header">
+        <h3>Medieval Europe</h3>
+        <p class="era-note">Europe absorbed and adapted mathematical knowledge from Arabic and classical sources.</p>
+      </div>
+      <div class="events">
+        <article class="event"><div class="date">1202 CE</div><h4>Fibonacci</h4><p>Published <em>Liber Abaci</em>, helping introduce Hindu-Arabic numerals and arithmetic methods to Europe.</p></article>
+        <article class="event"><div class="date">c. 1200s–1400s</div><h4>Spread of Hindu-Arabic Numerals</h4><p>Merchants and scholars gradually adopted the new number system because it improved calculation and recordkeeping.</p></article>
+      </div>
+      <div class="world-event">
+        <div class="label">World Event</div>
+        <p><strong>1492 — Columbus reaches the Americas.</strong> New trade routes and global contact reshaped the world that later mathematics would develop within.</p>
+      </div>
+    </section>
+
+    <section class="era" id="renaissance">
+      <div class="era-header">
+        <h3>Renaissance Algebra</h3>
+        <p class="era-note">European algebra became more systematic, especially in solving polynomial equations.</p>
+      </div>
+      <div class="events">
+        <article class="event"><div class="date">c. 1499–1557</div><h4>Niccolò Tartaglia</h4><p>Discovered methods for solving certain cubic equations and advanced algebraic problem solving.</p></article>
+        <article class="event"><div class="date">1501–1576</div><h4>Gerolamo Cardano</h4><p>Published general solutions to cubic and quartic equations in <em>Ars Magna</em>.</p></article>
+        <article class="event"><div class="date">1522–1565</div><h4>Lodovico Ferrari</h4><p>Developed a method for solving quartic equations, extending Renaissance algebra further.</p></article>
+      </div>
+      <div class="world-event">
+        <div class="label">World Event</div>
+        <p><strong>1517 — Protestant Reformation.</strong> Major religious and intellectual changes transformed Europe during the same period.</p>
+      </div>
+    </section>
+
+    <section class="era" id="early-modern">
+      <div class="era-header">
+        <h3>Early Modern Mathematics</h3>
+        <p class="era-note">Symbolic notation and new methods made mathematics more general, powerful, and easier to communicate.</p>
+      </div>
+      <div class="events">
+        <article class="event"><div class="date">1540–1603</div><h4>François Viète</h4><p>Introduced systematic symbolic algebra using letters for knowns and unknowns.</p></article>
+        <article class="event"><div class="date">1550–1617</div><h4>John Napier</h4><p>Invented logarithms, simplifying complex calculations in astronomy and science.</p></article>
+        <article class="event"><div class="date">1596–1650</div><h4>René Descartes</h4><p>Developed analytic geometry, connecting algebra with geometry through coordinates.</p></article>
+        <article class="event"><div class="date">1607–1665</div><h4>Pierre de Fermat</h4><p>Made major contributions to number theory, geometry, and early ideas related to calculus.</p></article>
+        <article class="event"><div class="date">1623–1662</div><h4>Blaise Pascal</h4><p>Worked on probability, geometry, and mathematical devices, influencing later developments.</p></article>
+        <article class="event"><div class="date">1654</div><h4>Pascal–Fermat Correspondence</h4><p>Their exchange of letters helped launch the formal study of probability.</p></article>
+      </div>
+      <div class="world-event">
+        <div class="label">World Event</div>
+        <p><strong>1642–1651 — English Civil War.</strong> Political conflict in England changed government power during a period of major scientific change.</p>
+      </div>
+    </section>
+
+    <section class="era" id="calculus">
+      <div class="era-header">
+        <h3>Calculus Era</h3>
+        <p class="era-note">Calculus transformed the study of motion, change, curves, and accumulation.</p>
+      </div>
+      <div class="events">
+        <article class="event"><div class="date">1642–1727</div><h4>Isaac Newton</h4><p>Developed calculus alongside his work in mechanics, gravity, and physics.</p></article>
+        <article class="event"><div class="date">1646–1716</div><h4>Gottfried Wilhelm Leibniz</h4><p>Independently developed calculus and introduced notation that is still widely used.</p></article>
+      </div>
+      <div class="world-event">
+        <div class="label">World Event</div>
+        <p><strong>1775–1783 — American Revolution.</strong> Political revolution reshaped the Atlantic world during the age of Enlightenment thought.</p>
+      </div>
+    </section>
+
+    <section class="era" id="eighteenth">
+      <div class="era-header">
+        <h3>18th Century Mathematics</h3>
+        <p class="era-note">Mathematics became increasingly analytical, formal, and connected to mechanics and astronomy.</p>
+      </div>
+      <div class="events">
+        <article class="event"><div class="date">1707–1783</div><h4>Leonhard Euler</h4><p>Made enormous contributions to analysis, number theory, notation, mechanics, and graph theory.</p></article>
+        <article class="event"><div class="date">1736–1813</div><h4>Joseph-Louis Lagrange</h4><p>Advanced calculus of variations, mechanics, and algebraic methods.</p></article>
+        <article class="event"><div class="date">1749–1827</div><h4>Pierre-Simon Laplace</h4><p>Worked on celestial mechanics, probability, and mathematical physics.</p></article>
+      </div>
+      <div class="world-event">
+        <div class="label">World Event</div>
+        <p><strong>1789–1799 — French Revolution.</strong> A major political upheaval that promoted ideas of equality, citizenship, and democracy.</p>
+      </div>
+    </section>
+
+    <section class="era" id="nineteenth">
+      <div class="era-header">
+        <h3>19th Century Mathematics</h3>
+        <p class="era-note">This era expanded rigor, abstraction, algebraic structure, geometry, and the foundations of logic.</p>
+      </div>
+      <div class="events">
+        <article class="event"><div class="date">1777–1855</div><h4>Carl Friedrich Gauss</h4><p>Reshaped number theory, astronomy, statistics, and geometry with lasting depth and precision.</p></article>
+        <article class="event"><div class="date">1792–1856</div><h4>Nikolai Lobachevsky</h4><p>Developed non-Euclidean geometry, showing that Euclid's parallel postulate was not the only possible framework.</p></article>
+        <article class="event"><div class="date">1802–1860</div><h4>János Bolyai</h4><p>Independently helped develop non-Euclidean geometry.</p></article>
+        <article class="event"><div class="date">1811–1832</div><h4>Évariste Galois</h4><p>Founded group theory and connected algebraic structure to the solvability of equations.</p></article>
+        <article class="event"><div class="date">1805–1865</div><h4>William Rowan Hamilton</h4><p>Introduced quaternions and contributed to algebra, mechanics, and geometry.</p></article>
+        <article class="event"><div class="date">1815–1864</div><h4>George Boole</h4><p>Created Boolean algebra, laying foundations for symbolic logic and later computer science.</p></article>
+        <article class="event"><div class="date">1826–1866</div><h4>Bernhard Riemann</h4><p>Developed Riemannian geometry and transformed analysis and differential geometry.</p></article>
+        <article class="event"><div class="date">1845–1918</div><h4>Georg Cantor</h4><p>Founded set theory and developed the mathematics of infinity.</p></article>
+      </div>
+      <div class="world-event">
+        <div class="label">World Event</div>
+        <p><strong>1914–1918 — World War I.</strong> A global war involving major powers that changed politics, culture, and the modern world.</p>
+      </div>
+    </section>
+
+    <section class="era" id="twentieth">
+      <div class="era-header">
+        <h3>20th Century Mathematics</h3>
+        <p class="era-note">Modern mathematics confronted logic, foundations, computability, and the limits of formal systems.</p>
+      </div>
+      <div class="events">
+        <article class="event"><div class="date">1862–1943</div><h4>David Hilbert</h4><p>Presented Hilbert's Problems in 1900, shaping the direction of twentieth-century mathematical research.</p></article>
+        <article class="event"><div class="date">1906–1978</div><h4>Kurt Gödel</h4><p>Proved the incompleteness theorems, showing limits to what formal systems can prove.</p></article>
+        <article class="event"><div class="date">1912–1954</div><h4>Alan Turing</h4><p>Created fundamental ideas of computability and the Turing machine, helping lay the groundwork for computer science.</p></article>
+      </div>
     </section>
   </main>
 
-  <footer>
-    Made by Sydney
+  <footer class="page">
+    Built for Sydney's History of Mathematics project.
   </footer>
 </body>
 </html>
