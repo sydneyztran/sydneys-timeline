@@ -177,12 +177,12 @@ h1 {
 
 .event.left::before,
 .world-event.left::before {
-  right: -2.1rem;
+  right: calc(-2.5rem - 12px);
 }
 
 .event.right::before,
 .world-event.right::before {
-  left: -2.1rem;
+  left: calc(-2.5rem - 12px);
 }
 
 .date {
