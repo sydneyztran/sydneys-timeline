@@ -1,6 +1,7 @@
 function openModal(img) {
   const modal = document.getElementById("imageModal");
   const modalImg = document.getElementById("modalImg");
+
   modal.style.display = "flex";
   modalImg.src = img.src;
   modalImg.alt = img.alt || "Expanded image";
@@ -10,56 +11,55 @@ function closeModal() {
   document.getElementById("imageModal").style.display = "none";
 }
 
-function sortTimelineItems(items) {
-  return items.sort((a, b) => {
-    const aStart = Number(a.dataset.start);
-    const bStart = Number(b.dataset.start);
-    const aEnd = Number(a.dataset.end);
-    const bEnd = Number(b.dataset.end);
-
-    if (aStart !== bStart) return aStart - bStart;
-    if (aEnd !== bEnd) return aEnd - bEnd;
-    return 0;
-  });
-}
-
 function layoutTimeline() {
   const timeline = document.getElementById("timeline");
-  let items = Array.from(timeline.querySelectorAll(".event"));
-
-  items = sortTimelineItems(items);
-
-  items.forEach(item => timeline.appendChild(item));
+  const items = Array.from(document.querySelectorAll(".timeline .event, .timeline .world-event"));
 
   if (window.innerWidth <= 900) {
     timeline.style.minHeight = "auto";
     return;
   }
 
-  const starts = items.map(item => Number(item.dataset.start));
-  const minStart = Math.min(...starts);
-  const maxStart = Math.max(...starts);
+  const years = items.map(item => Number(item.dataset.year));
+  const minYear = Math.min(...years);
+  const maxYear = Math.max(...years);
 
   const timelineHeight = 7000;
   const topPadding = 40;
   const bottomPadding = 80;
-  const minGap = 34;
 
   timeline.style.minHeight = `${timelineHeight}px`;
 
-  let lastY = -Infinity;
+  items.forEach((item, index) => {
+    item.classList.remove("left", "right");
+    item.classList.add(index % 2 === 0 ? "left" : "right");
+  });
 
-  items.forEach(item => {
-    const start = Number(item.dataset.start);
-    const percent = (start - minStart) / (maxStart - minStart);
+  const placed = [];
+
+  items.forEach((item) => {
+    const year = Number(item.dataset.year);
+    const percent = (year - minYear) / (maxYear - minYear);
     let y = topPadding + percent * (timelineHeight - topPadding - bottomPadding);
 
-    if (y < lastY + minGap) {
-      y = lastY + minGap;
+    const itemSide = item.classList.contains("left") ? "left" : "right";
+
+    for (const prev of placed) {
+      const sameSide = prev.side === itemSide;
+      const tooClose = Math.abs(y - prev.y) < prev.height + 30;
+
+      if (sameSide && tooClose) {
+        y = prev.y + prev.height + 30;
+      }
     }
 
     item.style.top = `${y}px`;
-    lastY = y + item.offsetHeight;
+
+    placed.push({
+      y,
+      side: itemSide,
+      height: item.offsetHeight
+    });
   });
 
   let maxBottom = 0;
