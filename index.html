@@ -328,6 +328,37 @@
       filter: brightness(0.95) contrast(1.05);
     }
 
+    /* Modal background */
+    .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    }
+
+    /* Big image */
+    .modal img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 12px;
+    }
+
+    /* Make images feel clickable */
+    .event-img {
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    }
+
+    .event-img:hover {
+    transform: scale(1.03);
+    }
+
   </style>
 </head>
 <body>
@@ -386,10 +417,10 @@
       </div>
       <div class="events">
         <article class="event">
-            <img src="images/babylonian-tablet.jpg" alt="Babylonian clay tablet" class="event-img">
-            <div class="date">c. 2000–1600 BCE</div>
-            <h4>Babylonian Base-60 System</h4>
-            <p>Babylonians used a sexagesimal place-value system, which influenced timekeeping, angles, and later mathematical notation.</p>
+          <img src="images/babylonian-tablet.jpg" class="event-img" onclick="openModal(this)">
+          <div class="date">c. 2000–1600 BCE</div>
+          <h4>Babylonian Base-60 System</h4>
+          <p>Babylonians used a sexagesimal place-value system, which influenced timekeeping, angles, and later mathematical notation.</p>
         </article>
         <article class="event">
             <div class="date">c. 1800 BCE</div>
@@ -711,5 +742,24 @@
   <footer class="page">
     Made by Sydney.
   </footer>
+
+  <div id="imageModal" class="modal" onclick="closeModal()">
+    <img id="modalImg">
+    </div>
+
+    <script>
+    function openModal(img) {
+        const modal = document.getElementById("imageModal");
+        const modalImg = document.getElementById("modalImg");
+
+        modal.style.display = "flex";
+        modalImg.src = img.src;
+    }
+
+    function closeModal() {
+        document.getElementById("imageModal").style.display = "none";
+    }
+    </script>
+
 </body>
 </html>
